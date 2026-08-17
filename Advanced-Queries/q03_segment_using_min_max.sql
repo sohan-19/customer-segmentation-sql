@@ -11,7 +11,7 @@ select  min_amount + (max_amount - min_amount) * 0.34 as threshold_1,
 
 Customer_segment as(
  select customer_id,total_spend,case when total_spend <= threshold_1 then 'Low'
- when total_spend > threshold_1 and total_spend < threshold.threshold_2 then 'Medium'
+ when total_spend > threshold_1 and total_spend < threshold_2 then 'Medium'
  else'High' End as Segments from segments
  cross join threshold)
  
