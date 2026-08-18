@@ -1,54 +1,61 @@
 -- Question 4 Find top 20% customers contributing to 80% revenue (Pareto logic)
-with c as (select customer_id,sum(amount) as total_spend from transactions
-group by customer_id),
-
-total_revenue as (select sum(total_spend) as total_revenue from c),
-cumulative_revenue AS
-(
-SELECT customer_id,
-           total_spend,
-
-           SUM(total_spend) OVER
-           (
-               ORDER BY total_spend DESC
-               ROWS BETWEEN UNBOUNDED PRECEDING
-               AND CURRENT ROW
-           ) AS running_total,
-
-           ROW_NUMBER() OVER
-           (
-               ORDER BY total_spend DESC
-           ) AS customer_rank,
-
-           COUNT(*) OVER () AS total_customers
-
-    FROM c
+with c as (
+    select
+        customer_id,
+        sum(amount) as total_spend
+    from transactions
+    group by customer_id
 ),
 
-pareto AS
-(
-    SELECT customer_id,
-           total_spend,
-           running_total,
+total_revenue as (
+    select
+        sum(total_spend) as total_revenue
+    from c
+),
 
-           ROUND(
-               running_total * 100.0 / total_revenue,
-               2
-           ) AS cumulative_percentage,
+cumulative_revenue as (
+    select
+        customer_id,
+        total_spend,
 
-           ROUND(
-               customer_rank * 100.0 / total_customers,
-               2
-           ) AS customer_percentage
+        sum(total_spend) over (
+            order by total_spend desc
+            rows between unbounded preceding and current row
+        ) as running_total,
 
-    FROM cumulative_revenue
-    CROSS JOIN total_revenue
+        row_number() over (
+            order by total_spend desc
+        ) as customer_rank,
+
+        count(*) over () as total_customers
+
+    from c
+),
+
+pareto as (
+    select
+        customer_id,
+        total_spend,
+        running_total,
+
+        round(
+            running_total * 100.0 / total_revenue,
+            2
+        ) as cumulative_percentage,
+
+        round(
+            customer_rank * 100.0 / total_customers,
+            2
+        ) as customer_percentage
+
+    from cumulative_revenue
+    cross join total_revenue
 )
 
-SELECT *
-FROM pareto
-WHERE customer_percentage <= 20
-ORDER BY total_spend DESC;
+select *
+from pareto
+where customer_percentage <= 20
+order by total_spend desc;
 
 
 -- Insights
