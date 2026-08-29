@@ -40,13 +40,13 @@ Window Functions — RANK(), NTILE(), PERCENT_RANK()
 Segmentation logic — RFM, Min-Max normalization, Pareto (80/20) principle
 
 Repository Structure
-├── Datasets/                          # Raw customers & transactions data (Kaggle)
-├── Basic Queries/                     # Foundational SQL queries
-├── Basic-Queries-Output/              # Output/results of basic queries
-├── Intermediate-Queries/              # Grouping, filtering & comparative queries
-├── Intermediate-Queries-Output/       # Output/results of intermediate queries
-├── Advanced-Queries/                  # RFM, ranking & customer segmentation queries
-├── Advanced-Queries-Output/           # Output/results of advanced queries
+├── Datasets/                           1 Raw customers & transactions data (Kaggle)
+├── Basic Queries/                      2 Foundational SQL queries
+├── Basic-Queries-Output/               3 Output/results of basic queries
+├── Intermediate-Queries/               4 Grouping, filtering & comparative queries
+├── Intermediate-Queries-Output/       5 Output/results of intermediate queries
+├── Advanced-Queries/                  6 RFM, ranking & customer segmentation queries
+├── Advanced-Queries-Output/           7 Output/results of advanced queries
 └── README.md
 
 Queries Covered
